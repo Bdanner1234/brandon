@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 import plotly.graph_objects as go
 
 # Load the dataset
-df = pd.read_csv('/Users/brandondanner/School-Repository/brandon/vehicles_us.csv')
+df = pd.read_csv('./vehicles_us.csv')
 
 st.header("The Average Vehicle Price by Model Year")
 # Line plot for average price per model year (Matplotlib/Seaborn)
