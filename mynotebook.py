@@ -9,21 +9,20 @@ import plotly.graph_objects as go
 # Load the dataset
 df = pd.read_csv('/Users/brandondanner/School-Repository/brandon/vehicles_us.csv')
 
-
+st.header("The Average Vehicle Price by Model Year")
 # Line plot for average price per model year (Matplotlib/Seaborn)
 avg_price_per_year = df.groupby('model_year')['price'].mean().reset_index()
 plt.figure(figsize=(12, 6))
 sns.lineplot(data=avg_price_per_year, x='model_year', y='price')
-plt.title('Average Vehicle Price by Model Year')
 plt.xlabel('Model Year')
 plt.ylabel('Average Price')
 plt.xticks(rotation=45)
 st.pyplot(plt)  # Correct: st.pyplot for Matplotlib/Seaborn plot
 plt.close()  # Close the plot
 
+st.header("The Vehicle Condition by Model Year")
 # Histogram for vehicle condition by model year (Plotly)
 fig2 = px.histogram(df, x='model_year', color='condition', barmode='overlay',
-                    title='Histogram of Vehicle Condition by Model Year',
                     histnorm='probability density')
 
 st.plotly_chart(fig2)  # Correct: st.plotly_chart for Plotly figure
@@ -47,10 +46,9 @@ for m in unique_models:
 
 # Create the figure
 fig = go.Figure(data=traces)
-
+st.header("Price Distribution by Manufacturer")
 # Add dropdown buttons
 fig.update_layout(
-    title='Price Distribution by Manufacturer',
     xaxis_title='Price',
     yaxis_title='Density',
     barmode='overlay',
@@ -73,9 +71,9 @@ fig.update_layout(
 st.plotly_chart(fig)  # Correct: st.plotly_chart for Plotly figure
 
 # Scatter plot for odometer vs price (Matplotlib)
+st.header("The Odometer vs Price")
 plt.figure(figsize=(8, 6))
 df.plot(kind='scatter', x='odometer', y='price', alpha=0.36)
-plt.title('Odometer vs Price')
 plt.xlabel('Odometer')
 plt.ylabel('Price')
 plt.xlim(0, 500000)  # Set the x-axis limits (adjust as needed)
