@@ -12,13 +12,16 @@ df = pd.read_csv('./vehicles_us.csv')
 st.header("The Average Vehicle Price by Model Year")
 # Line plot for average price per model year (Matplotlib/Seaborn)
 avg_price_per_year = df.groupby('model_year')['price'].mean().reset_index()
-fig, ax = plt.subplots(figsize=(12, 6))
-sns.lineplot(data=avg_price_per_year, x='model_year', y='price', ax=ax)
-ax.set_xlabel('Model Year')
-ax.set_ylabel('Average Price')
-plt.xticks(rotation=45)
-st.pyplot(fig)  # Correct: st.pyplot for Matplotlib/Seaborn plot
-#plt.close()  # Close the plot
+fig = px.line(avg_price_per_year, x='model_year', y='price', labels={'model_year': 'Model Year', 'price': 'Average Price'}, title='Average Vehicle Price by Model Year')
+fig.update_xaxes(tickangle=45)
+st.plotly_chart(fig)
+#fig, ax = plt.subplots(figsize=(12, 6))
+# sns.lineplot(data=avg_price_per_year, x='model_year', y='price', ax=ax)
+# ax.set_xlabel('Model Year')
+# ax.set_ylabel('Average Price')
+# plt.xticks(rotation=45)
+# st.pyplot(fig)  # Correct: st.pyplot for Matplotlib/Seaborn plot
+# #plt.close()  # Close the plot
 
 st.header("The Vehicle Condition by Model Year")
 # Histogram for vehicle condition by model year (Plotly)
@@ -71,12 +74,18 @@ fig.update_layout(
 st.plotly_chart(fig)  # Correct: st.plotly_chart for Plotly figure
 
 # Scatter plot for odometer vs price (Matplotlib)
+# Create the Plotly Express scatter plot 
 st.header("The Odometer vs Price")
-plt.figure(figsize=(8, 6))
-df.plot(kind='scatter', x='odometer', y='price', alpha=0.36)
-plt.xlabel('Odometer')
-plt.ylabel('Price')
-plt.xlim(0, 500000)  # Set the x-axis limits (adjust as needed)
-plt.ylim(0, 100000)
-st.pyplot(plt)  # Correct: st.pyplot for Matplotlib/Seaborn plot
-plt.close()
+fig = px.scatter(df, x='odometer', y='price', opacity=0.36, labels={'odometer': 'Odometer', 'price': 'Price'}, title='Scatter Plot of Odometer vs Price') 
+fig.update_xaxes(range=[0, 500000]) 
+fig.update_yaxes(range=[0, 100000])
+# Display the chart in Streamlit 
+st.plotly_chart(fig)
+# plt.figure(figsize=(8, 6))
+# df.plot(kind='scatter', x='odometer', y='price', alpha=0.36)
+# plt.xlabel('Odometer')
+# plt.ylabel('Price')
+# plt.xlim(0, 500000)  # Set the x-axis limits (adjust as needed)
+# plt.ylim(0, 100000)
+# st.pyplot(plt)  # Correct: st.pyplot for Matplotlib/Seaborn plot
+# plt.close()
