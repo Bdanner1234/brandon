@@ -12,13 +12,13 @@ df = pd.read_csv('./vehicles_us.csv')
 st.header("The Average Vehicle Price by Model Year")
 # Line plot for average price per model year (Matplotlib/Seaborn)
 avg_price_per_year = df.groupby('model_year')['price'].mean().reset_index()
-plt.figure(figsize=(12, 6))
-sns.lineplot(data=avg_price_per_year, x='model_year', y='price')
-plt.xlabel('Model Year')
-plt.ylabel('Average Price')
+fig, ax = plt.subplots(figsize=(12, 6))
+sns.lineplot(data=avg_price_per_year, x='model_year', y='price', ax=ax)
+ax.set_xlabel('Model Year')
+ax.set_ylabel('Average Price')
 plt.xticks(rotation=45)
-st.pyplot(plt)  # Correct: st.pyplot for Matplotlib/Seaborn plot
-plt.close()  # Close the plot
+st.pyplot(fig)  # Correct: st.pyplot for Matplotlib/Seaborn plot
+#plt.close()  # Close the plot
 
 st.header("The Vehicle Condition by Model Year")
 # Histogram for vehicle condition by model year (Plotly)
