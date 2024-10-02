@@ -15,6 +15,7 @@ avg_price_per_year = df.groupby('model_year')['price'].mean().reset_index()
 fig = px.line(avg_price_per_year, x='model_year', y='price', labels={'model_year': 'Model Year', 'price': 'Average Price'}, title='Average Vehicle Price by Model Year')
 fig.update_xaxes(tickangle=45)
 st.plotly_chart(fig)
+# Display the plot in Streamlit
 #fig, ax = plt.subplots(figsize=(12, 6))
 # sns.lineplot(data=avg_price_per_year, x='model_year', y='price', ax=ax)
 # ax.set_xlabel('Model Year')
@@ -76,11 +77,32 @@ st.plotly_chart(fig)  # Correct: st.plotly_chart for Plotly figure
 # Scatter plot for odometer vs price (Matplotlib)
 # Create the Plotly Express scatter plot 
 st.header("The Odometer vs Price")
-fig = px.scatter(df, x='odometer', y='price', opacity=0.36, labels={'odometer': 'Odometer', 'price': 'Price'}, title='Scatter Plot of Odometer vs Price') 
+fig = px.scatter(df, x='odometer', y='price', opacity=0.36, labels={'odometer': 'Odometer', 'price': 'Price'}) 
 fig.update_xaxes(range=[0, 500000]) 
 fig.update_yaxes(range=[0, 100000])
 # Display the chart in Streamlit 
+# st.plotly_chart(fig)
+# Create a checkbox for changing x-axis to 'days_listed'
+use_days_listed = st.checkbox('Change x-axis to Days Listed')
+
+# Set the x-axis label dynamically based on the checkbox state
+x_axis = 'days_listed' if use_days_listed else 'odometer'
+
+# Create the scatter plot with Plotly
+fig = px.scatter(df, x=x_axis, y='price', opacity=0.36, labels={x_axis: x_axis.capitalize(), 'price': 'Price'})
+
+# Update x-axis range based on the checkbox state
+if x_axis == 'odometer':
+    fig.update_xaxes(range=[0, 500000])  # For 'odometer'
+else:
+    fig.update_xaxes(range=[0, df['days_listed'].max()])  # For 'days_listed'
+
+# Update y-axis range (kept constant)
+fig.update_yaxes(range=[0, 100000])
+
+# Display the chart in Streamlit (the chart will dynamically update based on checkbox state)
 st.plotly_chart(fig)
+
 # plt.figure(figsize=(8, 6))
 # df.plot(kind='scatter', x='odometer', y='price', alpha=0.36)
 # plt.xlabel('Odometer')
