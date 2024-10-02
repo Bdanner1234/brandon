@@ -76,7 +76,7 @@ st.plotly_chart(fig)  # Correct: st.plotly_chart for Plotly figure
 
 # Scatter plot for odometer vs price (Matplotlib)
 # Create the Plotly Express scatter plot 
-st.header("The Odometer vs Price")
+st.header("The Odometer and Days Listed vs Price")
 fig = px.scatter(df, x='odometer', y='price', opacity=0.36, labels={'odometer': 'Odometer', 'price': 'Price'}) 
 fig.update_xaxes(range=[0, 500000]) 
 fig.update_yaxes(range=[0, 100000])
